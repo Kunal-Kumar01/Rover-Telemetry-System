@@ -12,8 +12,8 @@ find_package(custom_interfaces REQUIRED)
 
 add_executable(monitor_node
   src/main.cpp
-  src/BNode.cpp
-  src/BSubsystem.cpp
+  src/MonitorNode.cpp
+  src/MonitorSubsystem.cpp
 )
 
 target_include_directories(monitor_node PUBLIC

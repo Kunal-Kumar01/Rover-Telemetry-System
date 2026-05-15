@@ -12,8 +12,8 @@ find_package(custom_interfaces REQUIRED)
 
 add_executable(sensor_node
   src/main.cpp
-  src/ANode.cpp
-  src/ASubsystem.cpp
+  src/SensorNode.cpp
+  src/SensorSubsystem.cpp
 )
 
 target_include_directories(sensor_node PUBLIC

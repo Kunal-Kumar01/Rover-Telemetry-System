@@ -1,26 +1,26 @@
-#include "BNode.hpp"
+#include "MonitorNode.hpp"
 
 using std::placeholders::_1;
 
-BNode::BNode()
+MonitorNode::MonitorNode()
 : Node("monitor_node")
 {
-  subscription_ = this->create_subscription<custom_interfaces::msg::RoverTelemetry>(
+  m_subscription = this->create_subscription<custom_interfaces::msg::RoverTelemetry>(
     "rover_telemetry", 10,
-    std::bind(&BNode::monitorCallback, this, _1));
+    std::bind(&MonitorNode::monitorCallback, this, _1));
 
-  emergency_stop_client_ = this->create_client<custom_interfaces::srv::EmergencyStop>(
+  m_emergency_stop_client = this->create_client<custom_interfaces::srv::EmergencyStop>(
     "emergency_stop");
 
   RCLCPP_INFO(this->get_logger(), "Monitor node started.");
 }
 
-void BNode::monitorCallback(const custom_interfaces::msg::RoverTelemetry & msg)
+void MonitorNode::monitorCallback(const custom_interfaces::msg::RoverTelemetry & msg)
 {
-  AlertLevel level = subsystem_.checkThresholds(
+  AlertLevel level = m_subsystem.checkThresholds(
     msg.battery_level, msg.motor_temp, msg.wheel_speed);
 
-  std::string alert = subsystem_.formatAlert(
+  std::string alert = m_subsystem.formatAlert(
     level, msg.battery_level, msg.motor_temp, msg.wheel_speed);
 
   if (level == AlertLevel::NOMINAL) {
@@ -33,9 +33,9 @@ void BNode::monitorCallback(const custom_interfaces::msg::RoverTelemetry & msg)
   }
 }
 
-void BNode::triggerEmergencyStop(const std::string & reason)
+void MonitorNode::triggerEmergencyStop(const std::string & reason)
 {
-  if (!emergency_stop_client_->wait_for_service(std::chrono::seconds(1))) {
+  if (!m_emergency_stop_client->wait_for_service(std::chrono::seconds(1))) {
     RCLCPP_ERROR(this->get_logger(), "Emergency stop service not available.");
     return;
   }
@@ -43,7 +43,7 @@ void BNode::triggerEmergencyStop(const std::string & reason)
   auto request = std::make_shared<custom_interfaces::srv::EmergencyStop::Request>();
   request->reason = reason;
 
-  auto future = emergency_stop_client_->async_send_request(request,
+  auto future = m_emergency_stop_client->async_send_request(request,
     [this](rclcpp::Client<custom_interfaces::srv::EmergencyStop>::SharedFuture response) {
       if (response.get()->acknowledged) {
         RCLCPP_INFO(this->get_logger(), "Emergency stop acknowledged by sensor node.");

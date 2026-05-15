@@ -1,8 +1,8 @@
-#include "ANode.hpp"
+#include "SensorNode.hpp"
 
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
-  rclcpp::spin(std::make_shared<ANode>());
+  rclcpp::spin(std::make_shared<SensorNode>());
   rclcpp::shutdown();
 }

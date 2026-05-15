@@ -1,5 +1,5 @@
-#ifndef MONITOR_NODE__BSUBSYSTEM_HPP_
-#define MONITOR_NODE__BSUBSYSTEM_HPP_
+#ifndef MONITOR_NODE__MONITORSUBSYSTEM_HPP_
+#define MONITOR_NODE__MONITORSUBSYSTEM_HPP_
 
 #include <string>
 
@@ -18,9 +18,9 @@ struct Thresholds {
   float wheel_speed_critical;
 };
 
-class BSubsystem {
+class MonitorSubsystem {
 public:
-  BSubsystem();
+  MonitorSubsystem();
 
   void setThresholds(const Thresholds & thresholds);
 
@@ -29,7 +29,7 @@ public:
   std::string formatAlert(AlertLevel level, float battery, float motor_temp, float wheel_speed);
 
 private:
-  Thresholds thresholds_;
+  Thresholds m_thresholds;
 };
 
 #endif 

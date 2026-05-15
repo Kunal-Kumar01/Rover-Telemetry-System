@@ -1,9 +1,9 @@
-#ifndef SENSOR_NODE__ASUBSYSTEM_HPP_
-#define SENSOR_NODE__ASUBSYSTEM_HPP_
+#ifndef SENSOR_NODE__SENSORSUBSYSTEM_HPP_
+#define SENSOR_NODE__SENSORSUBSYSTEM_HPP_
 
-class ASubsystem {
+class SensorSubsystem {
     public: 
-        ASubsystem();
+        SensorSubsystem();
 
         void simulateReadings();
         float getBatteryLevel() const;
@@ -13,9 +13,9 @@ class ASubsystem {
         void reset();
 
     private:
-        float battery_level_;
-        float motor_temp_;
-        float wheel_speed_;
+        float m_battery_level;
+        float m_motor_temp;
+        float m_wheel_speed;
 
         float randomness(float mins, float max);
 };
