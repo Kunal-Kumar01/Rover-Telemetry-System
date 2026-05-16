@@ -2,13 +2,7 @@
 
 MonitorSubsystem::MonitorSubsystem()
 {
-  // default thresholds
-  m_thresholds.battery_warning = 30.0f;
-  m_thresholds.battery_critical = 15.0f;
-  m_thresholds.motor_temp_warning = 75.0f;
-  m_thresholds.motor_temp_critical = 90.0f;
-  m_thresholds.wheel_speed_warning = 40.0f;
-  m_thresholds.wheel_speed_critical = 48.0f;
+  m_thresholds = {};
 }
 
 void MonitorSubsystem::setThresholds(const Thresholds & thresholds)

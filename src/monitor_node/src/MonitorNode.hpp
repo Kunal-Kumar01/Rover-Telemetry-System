@@ -14,10 +14,13 @@ public:
 private:
   void monitorCallback(const custom_interfaces::msg::RoverTelemetry & msg);
   void triggerEmergencyStop(const std::string & reason);
+  rcl_interfaces::msg::SetParametersResult parametersCallback(
+    const std::vector<rclcpp::Parameter> & parameters);
 
   MonitorSubsystem m_subsystem;
   rclcpp::Subscription<custom_interfaces::msg::RoverTelemetry>::SharedPtr m_subscription;
   rclcpp::Client<custom_interfaces::srv::EmergencyStop>::SharedPtr m_emergency_stop_client;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr m_param_callback;
 };
 
 #endif 
