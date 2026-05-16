@@ -1,0 +1,8 @@
+monitor_node:
+  ros__parameters:
+    battery_warning: 90.0
+    battery_critical: 80.0
+    motor_temp_warning: 75.0
+    motor_temp_critical: 90.0
+    wheel_speed_warning: 40.0
+    wheel_speed_critical: 48.0
