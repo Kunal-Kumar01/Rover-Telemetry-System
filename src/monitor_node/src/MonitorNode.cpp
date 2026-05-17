@@ -5,6 +5,9 @@ using std::placeholders::_1;
 MonitorNode::MonitorNode()
 : Node("monitor_node")
 {
+  m_callback_group = this->create_callback_group(
+  rclcpp::CallbackGroupType::Reentrant);
+
   this->declare_parameter("battery_warning", 30.0);
   this->declare_parameter("battery_critical", 15.0);
   this->declare_parameter("motor_temp_warning", 75.0);
@@ -24,9 +27,13 @@ MonitorNode::MonitorNode()
   m_param_callback = this->add_on_set_parameters_callback(
     std::bind(&MonitorNode::parametersCallback, this, std::placeholders::_1));
 
+  rclcpp::SubscriptionOptions options;
+  options.callback_group = m_callback_group;
+
   m_subscription = this->create_subscription<custom_interfaces::msg::RoverTelemetry>(
     "rover_telemetry", 10,
-    std::bind(&MonitorNode::monitorCallback, this, _1));
+    std::bind(&MonitorNode::monitorCallback, this, _1),
+    options);
 
   m_emergency_stop_client = this->create_client<custom_interfaces::srv::EmergencyStop>(
     "emergency_stop");

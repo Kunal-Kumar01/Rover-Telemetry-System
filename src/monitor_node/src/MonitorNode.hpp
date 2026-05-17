@@ -21,6 +21,7 @@ private:
   rclcpp::Subscription<custom_interfaces::msg::RoverTelemetry>::SharedPtr m_subscription;
   rclcpp::Client<custom_interfaces::srv::EmergencyStop>::SharedPtr m_emergency_stop_client;
   rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr m_param_callback;
+  rclcpp::CallbackGroup::SharedPtr m_callback_group;
 };
 
 #endif 

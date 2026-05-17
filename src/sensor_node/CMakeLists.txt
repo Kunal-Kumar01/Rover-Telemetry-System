@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(custom_interfaces REQUIRED)
+find_package(std_srvs REQUIRED)
 
 add_executable(sensor_node
   src/main.cpp
@@ -21,7 +22,7 @@ target_include_directories(sensor_node PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-ament_target_dependencies(sensor_node rclcpp custom_interfaces)
+ament_target_dependencies(sensor_node rclcpp custom_interfaces std_srvs)
 
 install(TARGETS sensor_node DESTINATION lib/${PROJECT_NAME})
 
